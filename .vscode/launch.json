@@ -5,11 +5,12 @@
       "type": "node",
       "request": "launch",
       "name": "Debug TypeScript (ts-node)",
-      "program": "${workspaceFolder}/ts/playground/index.ts",
+      "program": "${file}",
       "runtimeArgs": [
         "-r", "ts-node/register"
       ],
-      "cwd": "${workspaceFolder}/ts/playground",
+      "args": [],
+      "cwd": "${fileDirname}",
       "skipFiles": ["<node_internals>/**"],
       "env": {},
       "outFiles": [],
