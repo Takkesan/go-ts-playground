@@ -1,4 +1,5 @@
 import { select, Separator } from "@inquirer/prompts";
+import { Agi, Buf, Gar, Dian } from "./magic/magic";
 
 async function main(): Promise<void> {
   while (true) {
@@ -33,30 +34,15 @@ async function userCommands(): Promise<string> {
 }
 
 async function userMagicCommands(): Promise<string> {
+  // Magicサブクラスのインスタンスを配列で用意
+  const magics = [new Agi(), new Buf(), new Gar(), new Dian()];
   const answer = await select({
     message: "魔法を唱えろ！",
-    choices: [
-      {
-        name: "アギ",
-        value: "agi",
-        description: "敵1体に火炎属性で小ダメージ。",
-      },
-      {
-        name: "ブフ",
-        value: "buf",
-        description: "敵1体に氷結属性で小ダメージ。",
-      },
-      {
-        name: "ガル",
-        value: "gar",
-        description: "敵1体に疾風属性で小ダメージ。",
-      },
-      {
-        name: "ディア",
-        value: "dian",
-        description: "自分のHPを小回復する。",
-      },
-    ],
+    choices: magics.map((magic) => ({
+      name: magic.name,
+      value: magic.value,
+      description: magic.description,
+    })),
   });
 
   return answer;
