@@ -1,13 +1,34 @@
 import { select, Separator } from "@inquirer/prompts";
 import { Agi, Buf, Gar, Dian } from "./magic/magic";
+import { Actor } from "./actor/Actor";
+import { Goblin, Slime } from "./actor/Monster";
+import { Player } from "./actor/Player";
+
+function showBattleStart(monsters: Actor[]): void {
+  console.log(`木の後ろに何か影が…`);
+  console.log(`敵が出現した！: ${monsters.map((m) => m.name).join(", ")}`);
+}
 
 async function main(): Promise<void> {
+  const player: Player = new Player("あなた");
+  const monsters: Actor[] = [new Goblin(), new Slime()];
+
+  showBattleStart(monsters);
+
   while (true) {
     const input: string = await userCommands();
     if (input === "magic") {
       const magicInput: string = await userMagicCommands();
-      console.log(`You selected magic: ${magicInput}`);
-      continue; // Continue to the next iteration for more commands
+      const target = await chosenMonster(monsters);
+      console.log(`You selected magic: ${magicInput} → ${target.name}`);
+      // ここで魔法の発動処理を追加可能
+      continue;
+    }
+    if (input === "sword") {
+      const target = await chosenMonster(monsters);
+      console.log(`You selected: sword → ${target.name}`);
+      // ここで物理攻撃処理を追加可能
+      continue;
     }
     console.log(`You selected: ${input}`);
   }
@@ -42,6 +63,19 @@ async function userMagicCommands(): Promise<string> {
       name: `${magic.name}: ${magic.mpCost} MP`,
       value: magic.value,
       description: magic.description,
+    })),
+  });
+
+  return answer;
+}
+
+async function chosenMonster(monsters: Actor[]): Promise<Actor> {
+  const answer = await select({
+    message: "攻撃する敵を選べ！",
+    choices: monsters.map((monster) => ({
+      name: monster.name,
+      value: monster,
+      description: `HP: ${monster.hp}/${monster.maxHp}`,
     })),
   });
 
