@@ -28,6 +28,7 @@ async function main(): Promise<void> {
   showBattleStart(monsters);
 
   while (true) {
+    // 戦闘の状態を表示
     showStatus(player, monsters);
     if (shouldExit(player, monsters)) {
       if (!player.isAlive()) {
@@ -38,15 +39,30 @@ async function main(): Promise<void> {
       break;
     }
 
+    // プレイヤーのターン
     const input = await userCommands();
     if (input === "magic") {
       const magicInput = await userMagicCommands();
-      const target = await chosenMonster(monsters.filter((m) => m.isAlive()));
       const magic = getMagicList().find((m) => m.value === magicInput);
-      if (magic && magic.isAvailable(player)) {
-        magic.cast(player, target);
+      if (!magic) {
+        console.log("魔法が見つかりません！");
+        continue;
+      }
+      if (magic.target === "self") {
+        // 回復魔法など自分対象
+        if (magic.isAvailable(player)) {
+          magic.cast(player, player);
+        } else {
+          console.log("魔法が使用できないか、MPが足りません！");
+        }
       } else {
-        console.log("魔法が使用できないか、MPが足りません！");
+        // 敵対象
+        const target = await chosenMonster(monsters.filter((m) => m.isAlive()));
+        if (magic.isAvailable(player)) {
+          magic.cast(player, target);
+        } else {
+          console.log("魔法が使用できないか、MPが足りません！");
+        }
       }
     } else if (input === "sword") {
       const target = await chosenMonster(monsters.filter((m) => m.isAlive()));

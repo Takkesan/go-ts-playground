@@ -1,5 +1,7 @@
 import { Actor } from "../actor/Actor";
 
+export type MagicTarget = "enemy" | "self";
+
 /**
  * 魔法の基底クラス
  */
@@ -9,19 +11,22 @@ export abstract class Magic {
   readonly description: string;
   readonly mpCost: number;
   readonly power: number;
+  readonly target: MagicTarget;
 
   constructor(
     name: string,
     value: string,
     description: string,
     mpCost: number,
-    power: number
+    power: number,
+    target: MagicTarget
   ) {
     this.name = name;
     this.value = value;
     this.description = description;
     this.mpCost = mpCost;
     this.power = power;
+    this.target = target;
   }
 
   /**
@@ -61,7 +66,7 @@ export abstract class Magic {
  */
 export class Agi extends Magic {
   constructor() {
-    super("アギ", "agi", "敵1体に火炎属性で小ダメージ。", 3, 5);
+    super("アギ", "agi", "敵1体に火炎属性で小ダメージ。", 3, 5, "enemy");
   }
   cast(user: Actor, target: Actor): void {
     Magic.dealMagicDamage(user, target, this.mpCost, this.power);
@@ -73,7 +78,7 @@ export class Agi extends Magic {
  */
 export class Buf extends Magic {
   constructor() {
-    super("ブフ", "buf", "敵1体に氷結属性で小ダメージ。", 3, 4);
+    super("ブフ", "buf", "敵1体に氷結属性で小ダメージ。", 3, 4, "enemy");
   }
   cast(user: Actor, target: Actor): void {
     Magic.dealMagicDamage(user, target, this.mpCost, this.power);
@@ -85,7 +90,7 @@ export class Buf extends Magic {
  */
 export class Gar extends Magic {
   constructor() {
-    super("ガル", "gar", "敵1体に疾風属性で小ダメージ。", 3, 4);
+    super("ガル", "gar", "敵1体に疾風属性で小ダメージ。", 3, 4, "enemy");
   }
   cast(user: Actor, target: Actor): void {
     Magic.dealMagicDamage(user, target, this.mpCost, this.power);
@@ -97,7 +102,7 @@ export class Gar extends Magic {
  */
 export class Dian extends Magic {
   constructor() {
-    super("ディア", "dian", "自分のHPを小回復", 4, 10);
+    super("ディア", "dian", "自分のHPを小回復", 4, 10, "self");
   }
   cast(user: Actor, _target: Actor): void {
     if (!this.isAvailable(user)) {
