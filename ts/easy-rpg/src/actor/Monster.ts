@@ -28,17 +28,6 @@ export class Monster extends Actor {
   }
 
   /**
-   * 物理攻撃を実行
-   */
-  doAttack(target: Actor): void {
-    const damage = Math.max(0, this.attack - target.defense);
-    target.hp -= damage;
-    console.log(
-      `${this.name}は${target.name}に${damage}の物理ダメージを与えた！`
-    );
-  }
-
-  /**
    * 魔法攻撃を実行（使える魔法からランダム選択）
    */
   doMagic(target: Actor): void {
@@ -60,7 +49,7 @@ export class Monster extends Actor {
     if (action === "magic") {
       this.doMagic(player);
     } else {
-      this.doAttack(player);
+      this.PhysicalAttack(player);
     }
   }
 }
