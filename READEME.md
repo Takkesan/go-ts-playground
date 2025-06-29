@@ -23,3 +23,61 @@ npx ts-node main.ts
 ```
 npx ts-node src/main.ts
 ```
+
+# fastify-tutorial
+
+## 注意点
+
+fastify-tutorial では mongoDB を使用しています。
+以下のコマンドで mongoDB を Docker でホストする必要があります。
+
+```
+docker run --name my-mongo -d -p 27017:27017 mongo:latest
+```
+
+## テスト
+
+http://localhost:3000/animals に GET を行うと動物の一覧が返ってくる。
+
+```
+[
+    {
+        "_id": "686136b16f6f5593c0fddf0e",
+        "animal": "cat"
+    },
+    {
+        "_id": "686137246f6f5593c0fddf0f",
+        "animal": "bird"
+    }
+]
+```
+
+http://localhost:3000/animals/someanimal ("someanimal"は任意の文字列)に GET を行うと全部一致したものを返す。
+例えば http://localhost:3000/animals/cat では以下のレスポンスが返ってくる。
+
+```
+{
+    "_id": "686136816f6f5593c0fddf0b",
+    "animal": "cat"
+}
+```
+
+登録されていないものを入れると 500 エラーが返ってくる。
+例えば dog が登録されていない状態で http://localhost:3000/animals/dog で GET を行うと以下のレスポンスが返ってくる。
+
+```
+{
+    "statusCode": 500,
+    "error": "Internal Server Error",
+    "message": "Invalid value"
+}
+```
+
+http://localhost:3000/animals に対して POST することで動物を DB に登録する。
+以下をボディに含ませる。
+
+```
+{
+  "animal": "cat"
+}
+```
