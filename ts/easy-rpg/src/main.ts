@@ -22,15 +22,34 @@ async function main(): Promise<void> {
       const target = await chosenMonster(monsters);
       console.log(`You selected magic: ${magicInput} → ${target.name}`);
       // ここで魔法の発動処理を追加可能
-      continue;
+      const magic = [new Agi(), new Buf(), new Gar(), new Dian()].find(
+        (m) => m.value === magicInput
+      );
+      if (magic && magic.isAvailable(player)) {
+        magic.cast(player, target);
+      } else {
+        console.log("魔法が使用できないか、MPが足りません！");
+      }
     }
     if (input === "sword") {
       const target = await chosenMonster(monsters);
       console.log(`You selected: sword → ${target.name}`);
       // ここで物理攻撃処理を追加可能
-      continue;
+      const damage = Math.max(0, player.attack - target.defense);
+      target.hp -= damage;
+      console.log(
+        `${player.name}は${target.name}に${damage}の物理ダメージを与えた！`
+      );
     }
-    console.log(`You selected: ${input}`);
+
+    if (shouldExit(player, monsters)) {
+      if (!player.isAlive()) {
+        console.log("あなたは倒れた…ゲームオーバー！");
+      } else {
+        console.log("敵を全て倒した！勝利だ！");
+      }
+      break;
+    }
   }
 }
 
@@ -80,6 +99,14 @@ async function chosenMonster(monsters: Actor[]): Promise<Actor> {
   });
 
   return answer;
+}
+
+function shouldExit(player: Player, monsters: Actor | Actor[]): boolean {
+  const isPlayerDead = !player.isAlive();
+  const areMonstersDead = Array.isArray(monsters)
+    ? monsters.every((monster) => !monster.isAlive())
+    : !monsters.isAlive();
+  return isPlayerDead || areMonstersDead;
 }
 
 main();
