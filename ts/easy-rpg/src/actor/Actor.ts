@@ -29,7 +29,7 @@ export abstract class Actor {
 
   PhysicalAttack(target: Actor): void {
     const damage = Math.max(0, this.attack - target.defense);
-    target.hp -= damage;
+    target.hp -= Math.min(damage, target.hp);
     console.log(
       `${this.name}は${target.name}に${damage}の物理ダメージを与えた！`
     );
