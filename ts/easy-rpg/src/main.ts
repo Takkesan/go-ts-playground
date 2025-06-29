@@ -39,7 +39,7 @@ async function userMagicCommands(): Promise<string> {
   const answer = await select({
     message: "魔法を唱えろ！",
     choices: magics.map((magic) => ({
-      name: magic.name,
+      name: `${magic.name}: ${magic.mpCost} MP`,
       value: magic.value,
       description: magic.description,
     })),
