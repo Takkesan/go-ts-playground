@@ -1,6 +1,5 @@
 import { select } from "@inquirer/prompts";
 import { Agi, Buf, Gar, Dian, Magic } from "./magic/magic";
-import { Actor } from "./actor/Actor";
 import { Goblin, Slime, Monster } from "./actor/Monster";
 import { Player } from "./actor/Player";
 
