@@ -51,7 +51,7 @@ async function main(): Promise<void> {
       }
     } else if (input === "sword") {
       const target = await chosenMonster(monsters.filter((m) => m.isAlive()));
-      doPlayerAttack(player, target);
+      player.PhysicalAttack(target);
     }
 
     // モンスターのターン
@@ -61,14 +61,6 @@ async function main(): Promise<void> {
       }
     }
   }
-}
-
-function doPlayerAttack(player: Player, target: Actor): void {
-  const damage = Math.max(0, player.attack - target.defense);
-  target.hp -= damage;
-  console.log(
-    `${player.name}は${target.name}に${damage}の物理ダメージを与えた！`
-  );
 }
 
 async function userCommands(): Promise<string> {

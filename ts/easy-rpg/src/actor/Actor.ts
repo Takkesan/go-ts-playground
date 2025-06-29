@@ -26,4 +26,12 @@ export abstract class Actor {
   isAlive(): boolean {
     return this.hp > 0;
   }
+
+  PhysicalAttack(target: Actor): void {
+    const damage = Math.max(0, this.attack - target.defense);
+    target.hp -= damage;
+    console.log(
+      `${this.name}は${target.name}に${damage}の物理ダメージを与えた！`
+    );
+  }
 }
