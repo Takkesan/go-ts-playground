@@ -52,7 +52,7 @@ export class Agi extends Magic {
     }
     user.mp -= this.mpCost;
     const damage = Math.max(0, user.attack - target.defense + this.power);
-    target.hp -= damage;
+    target.hp = Math.max(0, target.hp - damage);
     console.log(
       `${user.name}は${target.name}に${damage}の火炎ダメージを与えた!`
     );
@@ -74,7 +74,7 @@ export class Buf extends Magic {
     }
     user.mp -= this.mpCost;
     const damage = Math.max(0, user.attack - target.defense + this.power);
-    target.hp -= damage;
+    target.hp = Math.max(0, target.hp - damage);
     console.log(
       `${user.name}は${target.name}に${damage}の氷結ダメージを与えた!`
     );
@@ -96,7 +96,7 @@ export class Gar extends Magic {
     }
     user.mp -= this.mpCost;
     const damage = Math.max(0, user.attack - target.defense + this.power);
-    target.hp -= damage;
+    target.hp = Math.max(0, target.hp - damage);
     console.log(
       `${user.name}は${target.name}に${damage}の疾風ダメージを与えた!`
     );
