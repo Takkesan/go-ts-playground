@@ -1,5 +1,4 @@
 import { Actor } from "../actor/Actor";
-import { Player } from "../actor/Player";
 
 /**
  * 魔法の基底クラス
@@ -33,9 +32,9 @@ export abstract class Magic {
   }
 
   /**
-   * 魔法の効果を発動
+   * 魔法の効果を発動（使用者がPlayerでもMonsterでもOK）
    */
-  abstract cast(player: Player, target: Actor): void;
+  abstract cast(user: Actor, target: Actor): void;
 }
 
 /**
@@ -46,16 +45,16 @@ export class Agi extends Magic {
     super("アギ", "agi", "敵1体に火炎属性で小ダメージ。", 3, 5);
   }
 
-  cast(player: Player, target: Actor): void {
-    if (!this.isAvailable(player)) {
+  cast(user: Actor, target: Actor): void {
+    if (!this.isAvailable(user)) {
       console.log("MPが足りない!不完全燃焼だ!");
       return;
     }
-    player.mp -= this.mpCost;
-    const damage = Math.max(0, player.attack - target.defense + this.power);
+    user.mp -= this.mpCost;
+    const damage = Math.max(0, user.attack - target.defense + this.power);
     target.hp -= damage;
     console.log(
-      `${player.name}は${target.name}に${damage}の火炎ダメージを与えた!`
+      `${user.name}は${target.name}に${damage}の火炎ダメージを与えた!`
     );
   }
 }
@@ -68,16 +67,16 @@ export class Buf extends Magic {
     super("ブフ", "buf", "敵1体に氷結属性で小ダメージ。", 3, 4);
   }
 
-  cast(player: Player, target: Actor): void {
-    if (!this.isAvailable(player)) {
+  cast(user: Actor, target: Actor): void {
+    if (!this.isAvailable(user)) {
       console.log("MPが足りない!粉雪が舞うだけだ!");
       return;
     }
-    player.mp -= this.mpCost;
-    const damage = Math.max(0, player.attack - target.defense + this.power);
+    user.mp -= this.mpCost;
+    const damage = Math.max(0, user.attack - target.defense + this.power);
     target.hp -= damage;
     console.log(
-      `${player.name}は${target.name}に${damage}の氷結ダメージを与えた!`
+      `${user.name}は${target.name}に${damage}の氷結ダメージを与えた!`
     );
   }
 }
@@ -90,16 +89,16 @@ export class Gar extends Magic {
     super("ガル", "gar", "敵1体に疾風属性で小ダメージ。", 3, 4);
   }
 
-  cast(player: Player, target: Actor): void {
-    if (!this.isAvailable(player)) {
+  cast(user: Actor, target: Actor): void {
+    if (!this.isAvailable(user)) {
       console.log("MPが足りない!そよかぜ程度しか吹かない!");
       return;
     }
-    player.mp -= this.mpCost;
-    const damage = Math.max(0, player.attack - target.defense + this.power);
+    user.mp -= this.mpCost;
+    const damage = Math.max(0, user.attack - target.defense + this.power);
     target.hp -= damage;
     console.log(
-      `${player.name}は${target.name}に${damage}の疾風ダメージを与えた!`
+      `${user.name}は${target.name}に${damage}の疾風ダメージを与えた!`
     );
   }
 }
@@ -112,13 +111,13 @@ export class Dian extends Magic {
     super("ディア", "dian", "自分のHPを小回復する。", 4, 10);
   }
 
-  cast(player: Player, _target: Actor): void {
-    if (!this.isAvailable(player)) {
+  cast(user: Actor, _target: Actor): void {
+    if (!this.isAvailable(user)) {
       console.log("MPが足りない!ちょっとジーンとするだけだ!");
       return;
     }
-    player.mp -= this.mpCost;
-    player.hp = Math.min(player.maxHp, player.hp + this.power);
-    console.log(`${player.name}はHPを${this.power}回復した!`);
+    user.mp -= this.mpCost;
+    user.hp = Math.min(user.maxHp, user.hp + this.power);
+    console.log(`${user.name}はHPを${this.power}回復した!`);
   }
 }

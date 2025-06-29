@@ -1,17 +1,17 @@
 import { select, Separator } from "@inquirer/prompts";
 import { Agi, Buf, Gar, Dian } from "./magic/magic";
 import { Actor } from "./actor/Actor";
-import { Goblin, Slime } from "./actor/Monster";
+import { Goblin, Slime, Monster } from "./actor/Monster";
 import { Player } from "./actor/Player";
 
-function showBattleStart(monsters: Actor[]): void {
+function showBattleStart(monsters: Monster[]): void {
   console.log(`木の後ろに何か影が…`);
   console.log(`敵が出現した！: ${monsters.map((m) => m.name).join(", ")}`);
 }
 
 async function main(): Promise<void> {
   const player: Player = new Player("あなた");
-  const monsters: Actor[] = [new Goblin(), new Slime()];
+  const monsters: Monster[] = [new Goblin(), new Slime()];
 
   showBattleStart(monsters);
 
@@ -19,9 +19,8 @@ async function main(): Promise<void> {
     const input: string = await userCommands();
     if (input === "magic") {
       const magicInput: string = await userMagicCommands();
-      const target = await chosenMonster(monsters);
+      const target = await chosenMonster(monsters.filter((m) => m.isAlive()));
       console.log(`You selected magic: ${magicInput} → ${target.name}`);
-      // ここで魔法の発動処理を追加可能
       const magic = [new Agi(), new Buf(), new Gar(), new Dian()].find(
         (m) => m.value === magicInput
       );
@@ -30,16 +29,21 @@ async function main(): Promise<void> {
       } else {
         console.log("魔法が使用できないか、MPが足りません！");
       }
-    }
-    if (input === "sword") {
-      const target = await chosenMonster(monsters);
+    } else if (input === "sword") {
+      const target = await chosenMonster(monsters.filter((m) => m.isAlive()));
       console.log(`You selected: sword → ${target.name}`);
-      // ここで物理攻撃処理を追加可能
       const damage = Math.max(0, player.attack - target.defense);
       target.hp -= damage;
       console.log(
         `${player.name}は${target.name}に${damage}の物理ダメージを与えた！`
       );
+    }
+
+    // プレイヤーの行動後、敵が生きていればモンスターのターン
+    for (const monster of monsters) {
+      if (monster.isAlive()) {
+        monster.act(player);
+      }
     }
 
     if (shouldExit(player, monsters)) {
