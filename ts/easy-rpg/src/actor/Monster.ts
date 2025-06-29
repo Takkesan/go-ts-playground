@@ -1,5 +1,5 @@
 import { Actor } from "../actor/Actor";
-import { Magic, Buf, Gar } from "../magic/magic";
+import { Magic, Buf, Gar, Agi } from "../magic/magic";
 
 export type MonsterAction = "attack" | "magic";
 
@@ -56,7 +56,7 @@ export class Monster extends Actor {
 
 export class Slime extends Monster {
   constructor() {
-    super("スライム", 10, 2, 3, 1, [new Buf()]);
+    super("スライム", 10, 3, 3, 1, [new Buf(), new Agi()]);
   }
 }
 
