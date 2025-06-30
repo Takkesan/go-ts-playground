@@ -1,0 +1,6 @@
+# Jest テスト用プロジェクト用 .gitignore
+node_modules/
+dist/
+coverage/
+.env
+*.log
