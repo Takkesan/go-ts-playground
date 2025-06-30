@@ -6,15 +6,21 @@
       "request": "launch",
       "name": "Debug TypeScript (ts-node)",
       "program": "${file}",
-      "runtimeArgs": [
-        "-r", "ts-node/register"
-      ],
+      "runtimeArgs": ["-r", "ts-node/register"],
       "args": [],
       "cwd": "${fileDirname}",
       "skipFiles": ["<node_internals>/**"],
       "env": {},
       "outFiles": [],
       "sourceMaps": false
+    },
+    {
+      "name": "Go: Run File",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${file}",
+      "cwd": "${fileDirname}"
     }
   ]
 }
