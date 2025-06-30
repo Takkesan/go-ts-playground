@@ -10,6 +10,24 @@ async function routes(fastify: FastifyInstance, options: Object) {
     return { hello: "world" };
   });
 
+  // APIのレスポンスがどのような形式になるかを定義
+  // APIのレスポンスが期待通りの形式であるかを検証する
+  const opts = {
+    schema: {
+      response: {
+        200: {
+          type: "object",
+          properties: {
+            hello: { type: "string" },
+          },
+        },
+      },
+    },
+  };
+  fastify.post("/", opts, async (request, reply) => {
+    return request.body;
+  });
+
   fastify.get("/animals", async (request, reply) => {
     const result = await collection.find().toArray();
     if (result.length === 0) {
