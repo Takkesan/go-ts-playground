@@ -6,10 +6,10 @@ playground では重要な文法を実際に書いて確認しました。Hello 
 easy-rpg では学んだことを生かすために一から RPG の戦闘システムを作成しました。CUI で ts ファイルを実行すると遊ぶことができます。
 
 Go のプロジェクトは./go 配下にまとめられています。
+welcome-playground には Hello World. を表示するコードが含まれています。
 
-```
-npx ts-node main.ts
-```
+また TypeScript と Go のデバッグの実行は、vscode から F5 を押すことで行えます。
+.vscode/launch.json を編集しているので他のエディターでは行えないと思います。
 
 # Typescript のプロジェクトの始め方
 
@@ -50,7 +50,7 @@ docker run --name my-mongo -d -p 27017:27017 mongo:latest
 
 ## テスト
 
-http://localhost:3000/animals に GET を行うと動物の一覧が返ってくる。
+http://localhost:3000/animals に GET を行うと動物の一覧が返ってきます。
 
 ```
 [
@@ -65,8 +65,8 @@ http://localhost:3000/animals に GET を行うと動物の一覧が返ってく
 ]
 ```
 
-http://localhost:3000/animals/someanimal ("someanimal"は任意の文字列)に GET を行うと全部一致したものを返す。
-例えば http://localhost:3000/animals/cat では以下のレスポンスが返ってくる。
+http://localhost:3000/animals/someanimal ("someanimal"は任意の文字列)に GET を行うと全部一致したものを返します。
+例えば http://localhost:3000/animals/cat では以下のレスポンスが返ってきます。
 
 ```
 {
@@ -75,8 +75,8 @@ http://localhost:3000/animals/someanimal ("someanimal"は任意の文字列)に 
 }
 ```
 
-登録されていないものを入れると 500 エラーが返ってくる。
-例えば dog が登録されていない状態で http://localhost:3000/animals/dog で GET を行うと以下のレスポンスが返ってくる。
+登録されていないものを入れると 500 エラーが返ります。
+例えば dog が登録されていない状態で http://localhost:3000/animals/dog で GET を行うと以下のレスポンスが返ってきます。
 
 ```
 {
@@ -86,8 +86,8 @@ http://localhost:3000/animals/someanimal ("someanimal"は任意の文字列)に 
 }
 ```
 
-http://localhost:3000/animals に対して POST することで動物を DB に登録する。
-以下をボディに含ませる。
+http://localhost:3000/animals に対して POST することで動物を DB に登録することができます。
+以下をボディに含ませる必要があります。
 
 ```
 {
