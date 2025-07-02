@@ -6,10 +6,10 @@ playground では重要な文法を実際に書いて確認しました。Hello 
 easy-rpg では学んだことを生かすために一から RPG の戦闘システムを作成しました。CUI で ts ファイルを実行すると遊ぶことができます。
 
 Go のプロジェクトは./go 配下にまとめられています。
+welcome-playground には Hello World. を表示するコードが含まれています。
 
-```
-npx ts-node main.ts
-```
+また TypeScript と Go のデバッグの実行は、vscode から F5 を押すことで行えます。
+.vscode/launch.json を編集しているので他のエディターでは行えないと思います。
 
 # Typescript のプロジェクトの始め方
 
