@@ -21,9 +21,7 @@ func main() {
 }
 
 //govulncheck のチュートリアル
-
-// go install golang.org/x/vuln/cmd/govulncheck@latest
-// govulncheck ./...
+// README.md を参照してコマンドを確認してください。
 
 //上記のコマンドを実行すると脆弱性を検出してくれる
 
