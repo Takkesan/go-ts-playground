@@ -81,3 +81,23 @@ http://localhost:3000/animals に対して POST することで動物を DB に�
   "animal": "cat"
 }
 ```
+
+# tutorial-playground
+
+## 注意点
+
+このプロジェクトでは MySQL を使用します。以下のコマンドで起動してください。
+
+```bash
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql:latest
+docker exec -it mysql bash
+```
+
+これで
+
+```bash
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' some-mysql
+```
+
+このチュートリアルのようにデータベースを設定します。
+https://go.dev/doc/tutorial/database-access

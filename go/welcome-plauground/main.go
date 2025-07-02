@@ -173,17 +173,16 @@ func main() {
 	fmt.Println("Starting goroutine...")
 	go say("Hello from goroutine!")
 	fmt.Println("Main function is running...")
-	
+
 	// チャネル
 	ss := []int{1, 2, 3, 4, 5}
 	ch := make(chan int, 1)
 	go sum(ss[:len(ss)/2], ch) // スライスの前半をゴルーチンで処理
 	go sum(ss[len(ss)/2:], ch) // スライスの後半をゴルーチンで処理
-	x, y := <-ch, <-ch // チャネルから結果を受信
+	x, y := <-ch, <-ch         // チャネルから結果を受信
 	fmt.Println("Sum of first half:", x)
 	fmt.Println("Sum of second half:", y)
 	fmt.Println("Total sum:", x+y)
-
 
 	// チャネルを使ったフィボナッチ数列の生成
 	// 関数側でclose(c)を呼び出してチャネルを閉じることで、for rangeが終了する
@@ -206,7 +205,7 @@ func main() {
 	// 排他制御
 	cc := SafeCounter{v: make(map[string]int)}
 	for i := 0; i < 1000; i++ {
-		go cc.Inc("somekey") 
+		go cc.Inc("somekey")
 	}
 
 	time.Sleep(time.Second)
@@ -327,9 +326,9 @@ func say(s string) {
 	}
 }
 
-func sum(s []int, c chan int){
+func sum(s []int, c chan int) {
 	sum := 0
-	for _, v  := range s {
+	for _, v := range s {
 		sum += v
 	}
 	c <- sum // チャネルに結果を送信
@@ -345,7 +344,7 @@ func fibonacci(n int, c chan int) {
 	close(c) // チャネルを閉じる
 }
 
-func fibonacci2(c, quit chan int){
+func fibonacci2(c, quit chan int) {
 	x, y := 0, 1
 	for {
 		// caseの判断ができるようになったところを動的に追加していく感じ
@@ -367,14 +366,14 @@ type SafeCounter struct {
 }
 
 func (c *SafeCounter) Inc(key string) {
-	c.mu.Lock()		 // 排他制御のためにロックを取得
+	c.mu.Lock() // 排他制御のためにロックを取得
 
 	c.v[key]++
-	c.mu.Unlock()	 // 処理が終わったらロックを解放
+	c.mu.Unlock() // 処理が終わったらロックを解放
 }
 
 func (c *SafeCounter) Value(key string) int {
-	c.mu.Lock()		 // 排他制御のためにロックを取得
+	c.mu.Lock()         // 排他制御のためにロックを取得
 	defer c.mu.Unlock() // deferを使うこともあるよ
 
 	return c.v[key]
