@@ -5,6 +5,8 @@ jest-tutorial,like-button,random-cat はサバイバル TypeScript のチュー�
 playground では重要な文法を実際に書いて確認しました。Hello World.を表示するコードもここに含まれています。
 easy-rpg では学んだことを生かすために一から RPG の戦闘システムを作成しました。CUI で ts ファイルを実行すると遊ぶことができます。
 
+Go のプロジェクトは./go 配下にまとめられています。
+
 ```
 npx ts-node main.ts
 ```
@@ -15,6 +17,17 @@ npx ts-node main.ts
 2. npm install --save-dev ts-node typescript
 3. npm init -y
 4. npx tsc --init
+
+# React のプロジェクトの起動の仕方
+
+プロジェクトのディレクトリで以下のコマンドを実行する。
+
+```bash
+npm install
+npm run dev -- --host
+```
+
+devcontainer 内に React のプロジェクトがあるので host のオプションが必要です。
 
 # easy-rpg
 
