@@ -81,3 +81,31 @@ http://localhost:3000/animals に対して POST することで動物を DB に�
   "animal": "cat"
 }
 ```
+
+# welcome-playground
+
+https://go.dev/tour/welcome/1 の内容を写経しました。
+
+# database-playground
+
+## 注意点
+
+このプロジェクトでは MySQL を使用します。以下のコマンドで起動してください。
+
+```bash
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql:latest
+docker exec -it mysql bash
+```
+
+このチュートリアルのようにデータベースを設定します。
+https://go.dev/doc/tutorial/database-access
+
+# vuln-playground
+
+これは Go の脆弱性を検証する govulncheck というツールのチュートリアルです。
+以下のコマンドを使用することで脆弱性の一覧が出てきます。
+
+```bash
+go install golang.org/x/vuln/cmd/govulncheck@latest
+govulncheck ./...
+```
